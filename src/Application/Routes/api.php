@@ -12,8 +12,8 @@ $dotenv = Dotenv::createImmutable(__DIR__. '/../../../');
 $dotenv->load();
 
 $repository = $_ENV['DB_TYPE'] === 'mongodb'
-    ? new ProductRepositoryMongo()
-    : new ProductRepositoryPostgres();
+    ? new ProductRepositoryUsingMongoDB()
+    : new ProductRepositoryUsingPostgres();
 
 $productService = new ProductService($repository);
 $controller = new ProductController($productService);
