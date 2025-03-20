@@ -3,8 +3,8 @@
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Route;
 use App\Application\Controller\ProductController;
-use App\Infrastructure\Repository\ProductRepositoryMongo;
-use App\Infrastructure\Repository\ProductRepositoryPostgres;
+use App\Infrastructure\Repository\ProductRepositoryUsingMongoDB;
+use App\Infrastructure\Repository\ProductRepositoryUsingPostgres;
 use App\Application\Service\ProductService;
 use Dotenv\Dotenv;
 
