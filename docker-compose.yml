@@ -2,7 +2,12 @@ version: '3.8'
 
 services:
   php:
-    build: ./docker/php
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    build:
+      context: . # Build context is the root directory
+      dockerfile: ./docker/php/Dockerfile # Path to Dockerfile
     container_name: product-api-php
     restart: always
     working_dir: /var/www/html
@@ -28,25 +33,26 @@ services:
       - app-network
 
   db:
-    image: ${DB_TYPE}-latest
+    image: ${DB_TYPE}
     container_name: product-api-db
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
       POSTGRES_USER: ${PG_USER}
       POSTGRES_PASSWORD: ${PG_PASSWORD}
       POSTGRES_DB: ${PG_DB}
     ports:
       - "27017:27017" # MongoDB
-      - "5432:5432"  # PostgreSQL
     networks:
       - app-network
     volumes:
-      - db-data:/data/db
+      - mongodb_data:/data/db
 
 networks:
   app-network:
+    driver: bridge
 
 volumes:
-  db-data:
+  mongodb_data:
+    driver: local

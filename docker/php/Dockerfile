@@ -1,14 +1,32 @@
-FROM php:8.2-fpm
+# Use an official PHP image as the base image
+FROM php:8.3-fpm
+
+# Set the working directory inside the container
 WORKDIR /var/www/html
-RUN apt-get update && apt-get install -y \ libpq-dev \ libzip-dev \ unzip \ curl \ git \ && docker-php-ext-install zip pdo pdo_mysql pdo_pgsql
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libzip-dev \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libssl-dev \
+    libcurl4-openssl-dev \
+    && docker-php-ext-install zip exif pcntl bcmath gd
+# Install MongoDB extension
+RUN pecl install mongodb && docker-php-ext-enable mongodb
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN pecl install mongodb \ && docker-php-ext-enable mongodb
 
-COPY . /var/www/html
+# Copy composer.json and composer.lock (if it exists)
+COPY composer.json composer.lock ./
 
-RUN chown -R www-data:www-data /var/www/html \ && chmod -R 775 /var/www/html/storage
+# Install dependencies (use --no-dev for production)
+#RUN composer install
 
-RUN composer install --no-dev --optimize-autoloader
-
-EXPOSE 9000 CMD ["php-fpm"]
+# Copy the rest of the application code
+COPY . .
+RUN chown -R www-data:www-data /var/www/html
+# Expose port 9000 (if using PHP-FPM)
+EXPOSE 9000

@@ -18,7 +18,7 @@ require_once __DIR__. '/../vendor/autoload.php';
 $dotenv = Dotenv::createImmutable(__DIR__. '/../');
 $dotenv->load();
 
-$repository = $_ENV['DB_TYPE'] === 'mongodb'
+$repository = $_ENV['DB_TYPE'] === 'mongo'
     ? new ProductRepositoryUsingMongoDB()
     : new ProductRepositoryUsingPostgres();
 

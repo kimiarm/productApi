@@ -18,7 +18,7 @@
     </testsuites>
 
     <php>
-        <env name="DB_TYPE" value="mongodb"/>
+        <env name="DB_TYPE" value="mongo"/>
         <env name="MONGO_URI" value="mongodb://localhost:27017"/>
         <env name="MONGO_DB" value="productdb"/>
         <env name="PG_HOST" value="localhost"/>
