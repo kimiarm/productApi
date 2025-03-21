@@ -23,7 +23,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY composer.json composer.lock ./
 
 # Install dependencies (use --no-dev for production)
-#RUN composer install
+RUN composer install
 
 # Copy the rest of the application code
 COPY . .
