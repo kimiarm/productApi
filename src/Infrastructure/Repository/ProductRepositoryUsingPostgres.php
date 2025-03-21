@@ -6,7 +6,7 @@ namespace App\Infrastructure\Repository;
 
 use App\Domain\Model\Product;
 use App\Domain\Repository\ProductRepositoryInterface;
-use App\Infrastructure\Database\Database;
+use App\Infrastructure\DB\Database;
 use PDO;
 
 class ProductRepositoryUsingPostgres implements ProductRepositoryInterface
