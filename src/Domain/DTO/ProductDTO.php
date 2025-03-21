@@ -12,7 +12,7 @@ class ProductDTO
         public string $name,
         public float $price,
         public string $category,
-        public array $attributes
+        public AttributeDTO $attributes
     ) {}
 
     public static function fromModel(Product $product): array
@@ -22,7 +22,7 @@ class ProductDTO
             'name' => $product->name,
             'price' => $product->price,
             'category' => $product->category,
-            'attributes' => $product->attributes,
+            'attributes' => AttributeDTO::fromArray($product->attributes)->toArray(),
             'createdAt' => $product->createdAt,
         ];
     }
